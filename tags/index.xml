@@ -6,6 +6,28 @@
     <description>Recent content in Tags on HTB Notes</description>
     <generator>Hugo -- 0.147.9</generator>
     <language>en-us</language>
+    <lastBuildDate>Sun, 06 Jul 2025 18:04:05 +0300</lastBuildDate>
     <atom:link href="https://hoverdd.github.io/htb-notes/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Htb</title>
+      <link>https://hoverdd.github.io/htb-notes/tags/htb/</link>
+      <pubDate>Sun, 06 Jul 2025 18:04:05 +0300</pubDate>
+      <guid>https://hoverdd.github.io/htb-notes/tags/htb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Smb</title>
+      <link>https://hoverdd.github.io/htb-notes/tags/smb/</link>
+      <pubDate>Sun, 06 Jul 2025 18:04:05 +0300</pubDate>
+      <guid>https://hoverdd.github.io/htb-notes/tags/smb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Windows</title>
+      <link>https://hoverdd.github.io/htb-notes/tags/windows/</link>
+      <pubDate>Sun, 06 Jul 2025 18:04:05 +0300</pubDate>
+      <guid>https://hoverdd.github.io/htb-notes/tags/windows/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>

