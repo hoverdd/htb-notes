@@ -6,8 +6,22 @@
     <description>Recent content on HTB Notes</description>
     <generator>Hugo -- 0.147.9</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 06 Jul 2025 18:04:05 +0300</lastBuildDate>
+    <lastBuildDate>Sun, 06 Jul 2025 19:16:39 +0300</lastBuildDate>
     <atom:link href="https://hoverdd.github.io/htb-notes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About me</title>
+      <link>https://hoverdd.github.io/htb-notes/about/</link>
+      <pubDate>Sun, 06 Jul 2025 19:16:39 +0300</pubDate>
+      <guid>https://hoverdd.github.io/htb-notes/about/</guid>
+      <description>&lt;p&gt;Hey, I’m Lenya. I like hacking, learning new stuff, and figuring things out as I go.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🎸 Switched from trap music to grunge because it feels more honest.&lt;/li&gt;
+&lt;li&gt;💻 I’m all about hands-on hacking with HTB, not just boring theory.&lt;/li&gt;
+&lt;li&gt;🧠 Trying to live better and not just get by.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Life hasn’t always been easy, but I’m focused on growing and moving forward.&lt;/p&gt;
+&lt;p&gt;This blog is my place to share what I learn and keep track of my journey.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Archetype HTB Walkthrough</title>
       <link>https://hoverdd.github.io/htb-notes/posts/archetype/</link>
