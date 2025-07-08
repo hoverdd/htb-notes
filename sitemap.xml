@@ -2,19 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://hoverdd.github.io/htb-notes/about/</loc>
-    <lastmod>2025-07-06T19:16:39+03:00</lastmod>
-  </url><url>
     <loc>https://hoverdd.github.io/htb-notes/</loc>
+    <lastmod>2025-07-08T11:07:14+03:00</lastmod>
+  </url><url>
+    <loc>https://hoverdd.github.io/htb-notes/posts/oopsie/</loc>
+    <lastmod>2025-07-08T11:07:14+03:00</lastmod>
+  </url><url>
+    <loc>https://hoverdd.github.io/htb-notes/posts/</loc>
+    <lastmod>2025-07-08T11:07:14+03:00</lastmod>
+  </url><url>
+    <loc>https://hoverdd.github.io/htb-notes/about/</loc>
     <lastmod>2025-07-06T19:16:39+03:00</lastmod>
   </url><url>
     <loc>https://hoverdd.github.io/htb-notes/posts/archetype/</loc>
     <lastmod>2025-07-06T18:04:05+03:00</lastmod>
   </url><url>
     <loc>https://hoverdd.github.io/htb-notes/tags/htb/</loc>
-    <lastmod>2025-07-06T18:04:05+03:00</lastmod>
-  </url><url>
-    <loc>https://hoverdd.github.io/htb-notes/posts/</loc>
     <lastmod>2025-07-06T18:04:05+03:00</lastmod>
   </url><url>
     <loc>https://hoverdd.github.io/htb-notes/tags/smb/</loc>
