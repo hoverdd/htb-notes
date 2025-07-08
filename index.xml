@@ -28,18 +28,23 @@ Scrolling the page, we encounter interesting section about an existing login pag
 Start the burpsuite:&lt;/p&gt;</description>
     </item>
     <item>
-      <title>About me</title>
+      <title>👋 About Me</title>
       <link>https://hoverdd.github.io/htb-notes/about/</link>
       <pubDate>Sun, 06 Jul 2025 19:16:39 +0300</pubDate>
       <guid>https://hoverdd.github.io/htb-notes/about/</guid>
-      <description>&lt;p&gt;Hey, I’m Lenya. I like hacking, learning new stuff, and figuring things out as I go.&lt;/p&gt;
+      <description>&lt;p&gt;Hey, I&amp;rsquo;m &lt;strong&gt;Lenya&lt;/strong&gt; — 17 y.o. self-taught hacker from Russia.&lt;br&gt;
+This blog is where I collect notes from my learning path: HTB machines, tools, mindset, and mistakes.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;-what-im-into&#34;&gt;🎯 What I&amp;rsquo;m Into&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;🎸 Switched from trap music to grunge because it feels more honest.&lt;/li&gt;
-&lt;li&gt;💻 I’m all about hands-on hacking with HTB, not just boring theory.&lt;/li&gt;
-&lt;li&gt;🧠 Trying to live better and not just get by.&lt;/li&gt;
+&lt;li&gt;🎸 Playing guitar&lt;/li&gt;
+&lt;li&gt;💻 I love real hacking — HTB is my safe space&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Life hasn’t always been easy, but I’m focused on growing and moving forward.&lt;/p&gt;
-&lt;p&gt;This blog is my place to share what I learn and keep track of my journey.&lt;/p&gt;</description>
+&lt;hr&gt;
+&lt;h3 id=&#34;-what-this-blog-is&#34;&gt;🧠 What This Blog Is&lt;/h3&gt;
+&lt;p&gt;This is not just about pwns and machines.&lt;br&gt;
+It’s about &lt;strong&gt;gaining control&lt;/strong&gt;, one flag at a time.&lt;/p&gt;
+&lt;p&gt;If you’re learning too — you&amp;rsquo;re welcome.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Archetype HTB Walkthrough</title>
