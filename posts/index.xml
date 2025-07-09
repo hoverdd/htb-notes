@@ -6,8 +6,27 @@
     <description>Recent content in Posts on HTB Notes</description>
     <generator>Hugo -- 0.147.9</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Jul 2025 11:07:14 +0300</lastBuildDate>
+    <lastBuildDate>Wed, 09 Jul 2025 18:58:45 +0300</lastBuildDate>
     <atom:link href="https://hoverdd.github.io/htb-notes/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Vaccine Machine Notes</title>
+      <link>https://hoverdd.github.io/htb-notes/posts/vaccine/</link>
+      <pubDate>Wed, 09 Jul 2025 18:58:45 +0300</pubDate>
+      <guid>https://hoverdd.github.io/htb-notes/posts/vaccine/</guid>
+      <description>&lt;h2 id=&#34;1-nmap-scanning&#34;&gt;1. Nmap scanning&lt;/h2&gt;
+&lt;p&gt;Just as always: let&amp;rsquo;s scan open ports using nmap:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmap 10.129.127.158 -sC -sV --open
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;findings&#34;&gt;Findings&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Port 21 (FTP) is open, also it shows like there is a file named &lt;code&gt;backup.zip&lt;/code&gt; on the server
+&lt;img alt=&#34;backup.zip on FTP server&#34; loading=&#34;lazy&#34; src=&#34;https://hoverdd.github.io/htb-notes/posts/vaccine/screenshots/Screenshot%202025-07-09%20at%205.00.50%E2%80%AFPM.png&#34;&gt;&lt;/li&gt;
+&lt;li&gt;Port 22 (SSH) is open&lt;/li&gt;
+&lt;li&gt;Port 80 (Apache http server) - let&amp;rsquo;s access it on the web later&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2-enumeration&#34;&gt;2. Enumeration&lt;/h2&gt;
+&lt;h3 id=&#34;ftp-server&#34;&gt;FTP Server&lt;/h3&gt;
+&lt;p&gt;Let&amp;rsquo;s try log in &lt;code&gt;ftp&lt;/code&gt; service without a password with username &lt;code&gt;anonymous&lt;/code&gt;. It will as you for password, you can just hit ENTER.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Oopsie Machine Walkthrough</title>
       <link>https://hoverdd.github.io/htb-notes/posts/oopsie/</link>
