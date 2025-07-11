@@ -107,6 +107,21 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">Unified Machine Notes
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Start with scanning all the open ports on the host.
+1. Nmap Scanning nmap 10.129.96.149 -sC -sV --open -oA scans/nmap_initial note: before adding -oA scans/your_nmap_scan make sure you have scans/ folder otherwise nmap will give an error about non-existing directory.
+Findings Port 22 (SSH) Port 6789 (ibm-db2-admin?) Port 8080 (Apache Tomcat HTTP server) Port 8443 (Nagios NSCA) 2. Enumeration There are a lot of ports avaliable for us but let’s visit http server first, it’s easy. Before that, start Burpsuite maybe it’ll come in handy. I will use chromium with proxy &#43; Burpsuite:
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-07-11 09:00:32 +0300 MSK'>July 11, 2025</span></footer>
+  <a class="entry-link" aria-label="post link to Unified Machine Notes" href="https://hoverdd.github.io/htb-notes/posts/unified/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">Vaccine Machine Notes
     </h2>
   </header>

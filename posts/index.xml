@@ -6,8 +6,29 @@
     <description>Recent content in Posts on HTB Notes</description>
     <generator>Hugo -- 0.147.9</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 09 Jul 2025 18:58:45 +0300</lastBuildDate>
+    <lastBuildDate>Fri, 11 Jul 2025 09:00:32 +0300</lastBuildDate>
     <atom:link href="https://hoverdd.github.io/htb-notes/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Unified Machine Notes</title>
+      <link>https://hoverdd.github.io/htb-notes/posts/unified/</link>
+      <pubDate>Fri, 11 Jul 2025 09:00:32 +0300</pubDate>
+      <guid>https://hoverdd.github.io/htb-notes/posts/unified/</guid>
+      <description>&lt;p&gt;Start with scanning all the open ports on the host.&lt;/p&gt;
+&lt;h2 id=&#34;1-nmap-scanning&#34;&gt;1. Nmap Scanning&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmap 10.129.96.149 -sC -sV --open -oA scans/nmap_initial
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;em&gt;note&lt;/em&gt;: before adding &lt;code&gt;-oA scans/your_nmap_scan&lt;/code&gt; make sure you have &lt;code&gt;scans/&lt;/code&gt; folder otherwise &lt;code&gt;nmap&lt;/code&gt; will give an error about non-existing directory.&lt;/p&gt;
+&lt;h3 id=&#34;findings&#34;&gt;Findings&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Port 22 (SSH)&lt;/li&gt;
+&lt;li&gt;Port 6789 (ibm-db2-admin?)&lt;/li&gt;
+&lt;li&gt;Port 8080 (Apache Tomcat HTTP server)&lt;/li&gt;
+&lt;li&gt;Port 8443 (Nagios NSCA)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2-enumeration&#34;&gt;2. Enumeration&lt;/h2&gt;
+&lt;p&gt;There are a lot of ports avaliable for us but let&amp;rsquo;s visit http server first, it&amp;rsquo;s easy.
+Before that, start Burpsuite maybe it&amp;rsquo;ll come in handy.
+I will use chromium with proxy + Burpsuite:&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Vaccine Machine Notes</title>
       <link>https://hoverdd.github.io/htb-notes/posts/vaccine/</link>
