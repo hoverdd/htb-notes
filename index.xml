@@ -46,7 +46,7 @@ I will use chromium with proxy + Burpsuite:&lt;/p&gt;</description>
 &lt;/ul&gt;
 &lt;h2 id=&#34;2-enumeration&#34;&gt;2. Enumeration&lt;/h2&gt;
 &lt;h3 id=&#34;ftp-server&#34;&gt;FTP Server&lt;/h3&gt;
-&lt;p&gt;Let&amp;rsquo;s try log in &lt;code&gt;ftp&lt;/code&gt; service without a password with username &lt;code&gt;anonymous&lt;/code&gt;. It will as you for password, you can just hit ENTER.&lt;/p&gt;</description>
+&lt;p&gt;Let&amp;rsquo;s try log in &lt;code&gt;ftp&lt;/code&gt; service without a password with username &lt;code&gt;anonymous&lt;/code&gt;. It will ask you for password, you can just hit ENTER.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Oopsie Machine Walkthrough</title>
