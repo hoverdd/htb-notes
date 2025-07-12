@@ -6,8 +6,34 @@
     <description>Recent content in Posts on HTB Notes</description>
     <generator>Hugo -- 0.147.9</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 Jul 2025 09:00:32 +0300</lastBuildDate>
+    <lastBuildDate>Sat, 12 Jul 2025 11:21:20 +0300</lastBuildDate>
     <atom:link href="https://hoverdd.github.io/htb-notes/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cap Machine Walkthrough</title>
+      <link>https://hoverdd.github.io/htb-notes/posts/cap/</link>
+      <pubDate>Sat, 12 Jul 2025 11:21:20 +0300</pubDate>
+      <guid>https://hoverdd.github.io/htb-notes/posts/cap/</guid>
+      <description>&lt;h2 id=&#34;1-nmap-scanning&#34;&gt;1. Nmap scanning&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmap 10.10.10.245 -sC -sV --open -oN scans/nmap_inital
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;findings&#34;&gt;Findings&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Port 21 (FTP)&lt;/li&gt;
+&lt;li&gt;Port 22 (SSH)&lt;/li&gt;
+&lt;li&gt;Port 80 (Gunicorn HTTP server)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2-enumeration&#34;&gt;2. Enumeration&lt;/h2&gt;
+&lt;h3 id=&#34;ftp&#34;&gt;FTP&lt;/h3&gt;
+&lt;p&gt;Let&amp;rsquo;s try to connect to FTP service, maybe it&amp;rsquo;s misconfugured.
+&lt;img alt=&#34;alt text&#34; loading=&#34;lazy&#34; src=&#34;https://hoverdd.github.io/htb-notes/posts/cap/screenshots/Screenshot%202025-07-12%20at%2011.27.58%E2%80%AFAM.png&#34;&gt;
+Nah&amp;hellip; it needs user with a password.&lt;/p&gt;
+&lt;h3 id=&#34;http&#34;&gt;HTTP&lt;/h3&gt;
+&lt;p&gt;When visiting the website, we find ourselves in the security dashboard.
+&lt;img alt=&#34;alt text&#34; loading=&#34;lazy&#34; src=&#34;https://hoverdd.github.io/htb-notes/posts/cap/screenshots/Screenshot%202025-07-12%20at%2011.30.54%E2%80%AFAM.png&#34;&gt;
+In burger menu there is Security Snapshot page.
+&lt;img alt=&#34;alt text&#34; loading=&#34;lazy&#34; src=&#34;https://hoverdd.github.io/htb-notes/posts/cap/screenshots/Screenshot%202025-07-12%20at%2011.33.54%E2%80%AFAM.png&#34;&gt;
+When downloading the snapshot we see &lt;code&gt;8.pcap&lt;/code&gt; file that contains nothing useful for us.
+Let&amp;rsquo;s try to change request to:&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Unified Machine Notes</title>
       <link>https://hoverdd.github.io/htb-notes/posts/unified/</link>
